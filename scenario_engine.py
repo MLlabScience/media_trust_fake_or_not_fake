@@ -10,10 +10,10 @@ def match_scenario(scenario, meta, light, fft, face, prop, ai):
 
     # Camera (натуральная съемка)
     if scenario == "Camera":
-        score += meta * 0.5           # метаданные важны
-        score += light * 0.3          # физическая реалистичность
-        score += face * 0.2           # лица реалистичны
-        # GAN паттерн уменьшает вероятность
+        score += meta * 0.5          
+        score += light * 0.3          
+        score += face * 0.2           
+        
         score -= fft * 0.4
 
     # Manual Edit (ручная правка)
@@ -21,36 +21,36 @@ def match_scenario(scenario, meta, light, fft, face, prop, ai):
         score += meta * 0.3
         score += light * 0.2
         score += face * 0.3
-        score += prop * 0.2           # распространение может быть естественным
-        score -= fft * 0.3             # GAN артефакты снижают вероятность
+        score += prop * 0.2           
+        score -= fft * 0.3             
 
     # GAN generation (синтетическое изображение)
     elif scenario == "GAN":
         score += fft * 0.6
         score += face * 0.2
         score += prop * 0.1
-        score -= meta * 0.5            # отсутствие метаданных снижает вероятность
-        score -= light * 0.2            # иногда освещение несовершенное
+        score -= meta * 0.5           
+        score -= light * 0.2        
 
     # Deepfake (замена лица)
     elif scenario == "Deepfake":
         score += fft * 0.3
-        score += (100 - face) * 0.5    # нарушения лица → характерно
+        score += (100 - face) * 0.5    
         score += prop * 0.1
         score -= meta * 0.2
 
     # Meme / repost / compression
     elif scenario == "Meme":
-        score += prop * 0.4            # распространение быстрое
+        score += prop * 0.4            
         score -= fft * 0.2
         score -= face * 0.1
         score -= meta * 0.1
 
     else:
-        # если неизвестно, явно сообщаем
+        
         raise ValueError(f"Scenario '{scenario}' not implemented")
 
-    return max(score, 0)  # неотрицательный score
+    return max(score, 0)  
 
 
 def scenario_engine(meta, light, fft, face, prop, ai, logical, trust):
@@ -58,7 +58,7 @@ def scenario_engine(meta, light, fft, face, prop, ai, logical, trust):
     """
     Генерация нескольких гипотез и расчет вероятностей.
     """
-    # если логика плохая — подавляем "реальные" сценарии
+  
     logic_factor = logical / 100.0
     trust_factor = trust / 100.0
 
@@ -95,7 +95,7 @@ def scenario_engine(meta, light, fft, face, prop, ai, logical, trust):
     # 2. Нормализуем в вероятности
     total = np.sum(scores)
     if total == 0:
-        probs = [0 for _ in scores]  # невозможно определить вероятности
+        probs = [0 for _ in scores]  
     else:
         probs = [sc / total for sc in scores]
 
