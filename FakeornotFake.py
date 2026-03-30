@@ -145,7 +145,7 @@ def generate_heatmap(image):
     return heatmap
 
 ############################################
-# PROPAGATION (заглушка заменена логикой)
+# PROPAGATION 
 ############################################
 def get_format(pil_image):
     if hasattr(pil_image, "format") and pil_image.format:
@@ -205,7 +205,7 @@ def propagation_analysis(image_cv, pil_image):
     score -= noise * 0.2
 
     #################################
-    # 3. Blocking artifacts (очень важно)
+    # 3. Blocking artifacts 
     #################################
     h, w = gray.shape
 
@@ -223,9 +223,9 @@ def propagation_analysis(image_cv, pil_image):
     #################################
     if fmt in ["png", "tiff"]:
 
-        # PNG не должен иметь JPEG-артефактов
+        
         if noise > 25:
-            score -= 20  # странно для lossless
+            score -= 20  #  lossless
 
         if block_diff > 10:
             score -= 25  # подозрение на перекодировку
@@ -236,7 +236,7 @@ def propagation_analysis(image_cv, pil_image):
 
 
 ############################################
-# AI DETECTION (простая модель)
+# AI DETECTION 
 ############################################
 
 def ai_detection_score(fft_score, face_score):
@@ -469,11 +469,11 @@ def explain_logic(meta, light, fft, face, prop, ai, logical):
 
     # Общий уровень
     if logical < 40:
-        text.append("❗ Обнаружены серьёзные логические противоречия между признаками.")
+        text.append(" Обнаружены серьёзные логические противоречия между признаками.")
     elif logical < 70:
-        text.append("⚠️ Частичная несогласованность признаков.")
+        text.append(" Частичная несогласованность признаков.")
     else:
-        text.append("✅ Признаки логически согласованы.")
+        text.append(" Признаки логически согласованы.")
 
     # Детали
     if light < 40 and face > 70:
@@ -582,7 +582,7 @@ if uploaded_file:
     )
 
     # ===============================
-    # КВАНТОВАЯ ЛОГИКА (НОВЫЙ БЛОК)
+    # КВАНТОВАЯ ЛОГИКА 
     # ===============================
 
     vec = np.array([
@@ -597,7 +597,7 @@ if uploaded_file:
     logic_mismatch = quantum_logic_score(vec)
     logical_score = np.clip(100 - logic_mismatch * 100, 0, 100)
 
-    # ❗ штраф за "согласованно плохие признаки"
+    #  штраф за "согласованно плохие признаки"
     if np.mean([meta_score, light_score, face_score]) < 40:
         logical_score *= 0.5
 
