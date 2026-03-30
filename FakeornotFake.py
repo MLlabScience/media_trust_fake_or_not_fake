@@ -572,7 +572,7 @@ if uploaded_file:
     fft_score = fft_analysis(image_cv)
     face_score = face_analysis(image_cv)
     prop_score = propagation_analysis(image_cv, image)
-    nn_score = neural_detection(image)
+    #nn_score = neural_detection(image)
     ai_score_classic = ai_detection_score(fft_score, face_score)
 
     #
