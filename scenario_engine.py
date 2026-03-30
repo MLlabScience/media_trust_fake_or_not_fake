@@ -134,9 +134,5 @@ def explain_scenario(winner, meta, light, fft, face, prop, ai):
 
 
 if __name__ == "__main__":
-    # Пример использования
-    meta, light, fft, face, prop, ai = 80, 70, 40, 90, 60, 75
-    probs, winner = scenario_engine(meta, light, fft, face, prop, ai)
-    print("Scenario probabilities:", probs)
-    print("Most likely scenario:", winner)
+
 
