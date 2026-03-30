@@ -1,5 +1,13 @@
 #FakeornotFake.py
 
+import cv2
+cv2.setUseOptimized(True)
+cv2.namedWindow = lambda *a, **k: None  # блокировка GUI окон
+cv2.imshow = lambda *a, **k: None       # блокировка для вызова imshow
+cv2.waitKey = lambda *a, **k: None      # блокировка waitKey
+cv2.destroyAllWindows = lambda *a, **k: None  # блокировка окон
+
+
 import streamlit as st
 import cv2
 import numpy as np
@@ -619,24 +627,7 @@ if uploaded_file:
     st.metric("Trust Score", round(trust_score, 2))
 
     ############################################
-    st.subheader("Матрица взаимодействия функций")
 
-    corr_matrix = feature_correlation(
-        meta_score, light_score, fft_score,
-        face_score, prop_score, ai_score
-    )
-
-    fig, ax = plt.subplots()
-    ax.imshow(corr_matrix)
-
-    labels = ['Meta', 'Light', 'FFT', 'Face', 'Prop', 'AI']
-    ax.set_xticks(range(len(labels)))
-    ax.set_yticks(range(len(labels)))
-
-    ax.set_xticklabels(labels)
-    ax.set_yticklabels(labels)
-
-    st.pyplot(fig)
     ############################################
     st.subheader("Динамика факторов риска")
 
